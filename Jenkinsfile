@@ -13,22 +13,11 @@ pipeline {
       stage("Build image") {
             steps {
                 script {
-                    myapp = sudo docker.build("vamsijakkula/hellowhale:${env.BUILD_ID}")
+                    myapp = docker.build("vamsijakkula/hellowhale:${env.BUILD_ID}")
                 }
             }
         }
-    
-      stage("Push image") {
-            steps {
-                script {
-                    sudo docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")
-                    }
-                }
-            }
-        }
-
+   
     
     stage('Deploy App') {
       steps {
